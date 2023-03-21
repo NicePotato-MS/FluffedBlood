@@ -15,9 +15,12 @@ local comicSans
 local menuTitle
 
 function menu:init()
-    comicSans = getFont("ComicSans", "Bold", 80)
+    comicSans = getFont("ComicSans", "Bold", 40)
     menuTitle = love.graphics.newImage("Art/ui/title.png")
-    
+    playButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
+    playText = love.graphics.newText(comicSans, "Play")
+    optionsButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
+    optionsText = love.graphics.newText(comicSans, "Options")
 end
 
 function menu:draw()
@@ -41,6 +44,18 @@ function menu:draw()
     --Title Text
     love.graphics.setColor(255,255,255)
     love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,round(love.graphics.getHeight()/256))
+    love.graphics.draw(playButton, round(love.graphics.getWidth()/2)-round(playButton:getWidth()*0.8/2),
+        (round(love.graphics.getHeight())/2.1),
+        0, 0.8)
+    love.graphics.draw(playText, round(love.graphics.getWidth()/2)-round(playText:getWidth()*0.8/2),
+        (round(love.graphics.getHeight())/2.1),
+        0, 0.8)
+    love.graphics.draw(optionsButton, round(love.graphics.getWidth()/2)-round(optionsButton:getWidth()*0.8/2),
+        (round(love.graphics.getHeight())/1.6),
+        0, 0.8)
+    love.graphics.draw(optionsText, round(love.graphics.getWidth()/2)-round(optionsText:getWidth()*0.8/2),
+        (round(love.graphics.getHeight())/1.6),
+        0, 0.8)
     
 end
 
