@@ -8,7 +8,7 @@ menu = {}
 
 local delta
 
-local dotSize = 0.02
+local dotSize = 0.01
 local dotProgress = 0
 local literalDotSize = 5
 local comicSans
@@ -16,7 +16,8 @@ local menuTitle
 
 function menu:init()
     comicSans = getFont("ComicSans", "Bold", 80)
-    menuTitle = love.graphics.newText(comicSans, "Fluffed Blood")
+    menuTitle = love.graphics.newImage("Art/ui/title.png")
+    
 end
 
 function menu:draw()
@@ -38,8 +39,8 @@ function menu:draw()
     end
 
     --Title Text
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,round(love.graphics.getHeight()/12))
+    love.graphics.setColor(255,255,255)
+    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,round(love.graphics.getHeight()/256))
     
 end
 
