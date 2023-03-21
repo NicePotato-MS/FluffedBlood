@@ -1,3 +1,0 @@
-function love.update()
-
-end

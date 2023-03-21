@@ -1,5 +1,7 @@
-function getTextureMultiple()
-    local _, _, flags = love.window.getMode()
+local defaultScreenWidth = 480-16
+local defaultScreenHeight = 270-16
 
-    local width, height = love.window.getDesktopDimensions(flags.display)
+function getTextureMultiple()
+    local width, height = love.graphics.getDimensions()
+    return math.min(math.floor(width/defaultScreenWidth),math.floor(height/defaultScreenHeight))
 end

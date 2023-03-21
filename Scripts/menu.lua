@@ -1,7 +1,8 @@
 -- Main Menu
 
-require("Scripts/fonts")
 require("Scripts/vital")
+require("Scripts/fonts")
+require("Scripts/ui")
 Gamestate = require("Scripts/hump/gamestate")
 
 menu = {}
@@ -26,6 +27,7 @@ end
 function menu:draw()
     delta = love.timer.getDelta()
 
+    print(getTextureMultiple())
     --Background Color
     local bg = rgb(255,229,232)
     love.graphics.setBackgroundColor(bg[1],bg[2],bg[3])
@@ -43,19 +45,20 @@ function menu:draw()
 
     --Title Text
     love.graphics.setColor(255,255,255)
-    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,round(love.graphics.getHeight()/256))
-    love.graphics.draw(playButton, round(love.graphics.getWidth()/2)-round(playButton:getWidth()*0.8/2),
+    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()*0.25/2) ,40*0.25, 0, 0.25,0.25)
+    
+    love.graphics.draw(playButton, round(love.graphics.getWidth()/2)-round(playButton:getWidth()*0.6/2),
         (round(love.graphics.getHeight())/2.1),
-        0, 0.8)
-    love.graphics.draw(playText, round(love.graphics.getWidth()/2)-round(playText:getWidth()*0.8/2),
+        0, 0.6)
+    love.graphics.draw(playText, round(love.graphics.getWidth()/2)-round(playText:getWidth()*0.6/2),
         (round(love.graphics.getHeight())/2.1),
-        0, 0.8)
-    love.graphics.draw(optionsButton, round(love.graphics.getWidth()/2)-round(optionsButton:getWidth()*0.8/2),
+        0, 0.6)
+    love.graphics.draw(optionsButton, round(love.graphics.getWidth()/2)-round(optionsButton:getWidth()*0.6/2),
         (round(love.graphics.getHeight())/1.6),
-        0, 0.8)
-    love.graphics.draw(optionsText, round(love.graphics.getWidth()/2)-round(optionsText:getWidth()*0.8/2),
+        0, 0.6)
+    love.graphics.draw(optionsText, round(love.graphics.getWidth()/2)-round(optionsText:getWidth()*0.6/2),
         (round(love.graphics.getHeight())/1.6),
-        0, 0.8)
+        0, 0.6)
     
 end
 

@@ -1,8 +1,6 @@
 require("Scripts/menu")
 Gamestate = require("Scripts/hump/gamestate")
 
-local scribblesFont
-local scribblesImage
 local plrX = 0
 local plrY = 0
 
