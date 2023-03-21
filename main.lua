@@ -9,7 +9,7 @@ local plrY = 0
 
 
 function love.load()
-    local cursor = love.mouse.newCursor("art/cursor.png", 0, 0)
+    local cursor = love.mouse.newCursor("Art/Cursors/cursor.png", 0, 0)
     love.mouse.setCursor(cursor)
 
     Gamestate.registerEvents()
