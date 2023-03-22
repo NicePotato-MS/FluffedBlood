@@ -5,18 +5,25 @@ require("Scripts/fonts")
 require("Scripts/ui")
 Gamestate = require("Scripts/hump/gamestate")
 
+
 menu = {}
 
 local delta
 
-local dotSize = 0.01
+local dotSize = 5
 local dotProgress = 0
 local literalDotSize = 5
 local comicSans
 local menuTitle
+local playButton
+local playText
+local optionsButton
+local optionsText
+
+local textureMultiple
 
 function menu:init()
-    comicSans = getFont("ComicSans", "Bold", 40)
+    comicSans = getFont("ComicSans", "Bold", 15)
     menuTitle = love.graphics.newImage("Art/ui/title.png")
     playButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
     playText = love.graphics.newText(comicSans, "Play")
@@ -26,13 +33,15 @@ end
 
 function menu:draw()
     delta = love.timer.getDelta()
+    textureMultiple = getTextureMultiple()
 
-    print(getTextureMultiple())
+    comicSans = getFont("ComicSans", "Bold", 15*textureMultiple)
+
     --Background Color
     local bg = rgb(255,229,232)
     love.graphics.setBackgroundColor(bg[1],bg[2],bg[3])
 
-    literalDotSize = round(love.graphics.getWidth()*dotSize)
+    literalDotSize = round(dotSize*textureMultiple)
     if literalDotSize < 5 then literalDotSize = 5 end
     if dotProgress >= 4 then
         dotProgress = dotProgress-4
@@ -43,22 +52,17 @@ function menu:draw()
         drawDotRow(dotProgress*literalDotSize-literalDotSize*4,0-iY+love.graphics.getHeight()+literalDotSize, literalDotSize) 
     end
 
-    --Title Text
     love.graphics.setColor(255,255,255)
-    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,40, 0, 1,1)
-    
-    love.graphics.draw(playButton, round(love.graphics.getWidth()/2)-round(playButton:getWidth()*0.6/2),
-        (round(love.graphics.getHeight())/2.1),
-        0, 0.6)
-    love.graphics.draw(playText, round(love.graphics.getWidth()/2)-round(playText:getWidth()*0.6/2),
-        (round(love.graphics.getHeight())/2.1),
-        0, 0.6)
-    love.graphics.draw(optionsButton, round(love.graphics.getWidth()/2)-round(optionsButton:getWidth()*0.6/2),
-        (round(love.graphics.getHeight())/1.6),
-        0, 0.6)
-    love.graphics.draw(optionsText, round(love.graphics.getWidth()/2)-round(optionsText:getWidth()*0.6/2),
-        (round(love.graphics.getHeight())/1.6),
-        0, 0.6)
+    --Title Text
+    love.graphics.draw(drawAtCenter(menuTitle, screenXScale(0.5), screenYScale(0.2), 0.1*textureMultiple, 0.1*textureMultiple))
+
+    --Play Button
+    love.graphics.draw(drawAtCenter(playButton, screenXScale(0.5), screenYScale(0.5), 0.38*textureMultiple, 0.38*textureMultiple))
+    love.graphics.draw(drawAtCenter(playText, screenXScale(0.5), screenYScale(0.5), 1*textureMultiple, 1*textureMultiple))
+
+    --Options Button
+    love.graphics.draw(drawAtCenter(optionsButton, screenXScale(0.5), screenYScale(0.62), 0.38*textureMultiple, 0.38*textureMultiple))
+    love.graphics.draw(drawAtCenter(optionsText, screenXScale(0.5), screenYScale(0.62), 1*textureMultiple, 1*textureMultiple))
     
 end
 
@@ -71,3 +75,4 @@ end
 function menu:mousepressed()
     mouseX, mouseY = love.mouse.getPosition()
 end
+
