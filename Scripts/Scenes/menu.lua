@@ -45,7 +45,7 @@ function menu:draw()
 
     --Title Text
     love.graphics.setColor(255,255,255)
-    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()*0.25/2) ,40*0.25, 0, 0.25,0.25)
+    love.graphics.draw(menuTitle, round(love.graphics.getWidth()/2)-round(menuTitle:getWidth()/2) ,40, 0, 1,1)
     
     love.graphics.draw(playButton, round(love.graphics.getWidth()/2)-round(playButton:getWidth()*0.6/2),
         (round(love.graphics.getHeight())/2.1),

@@ -1,4 +1,4 @@
-require("Scripts/menu")
+require("Scripts/Scenes/menu")
 Gamestate = require("Scripts/hump/gamestate")
 
 local plrX = 0
