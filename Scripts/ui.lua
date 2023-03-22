@@ -7,7 +7,11 @@ function getTextureMultiple()
     local width, height = love.graphics.getDimensions()
     local result = math.min(math.floor(width/(defaultScreenWidth-32)),math.floor(height/(defaultScreenHeight-32)))
     if result < 1 then return 1 else return result end
-    hi
+end
+
+function mouseInBox(bx1,by1,bx2,by2)
+    local mX, mY = love.mouse.getPosition()
+    return pointWithin(mX, mY, bx1, by1, bx2, by2)
 end
 
 function drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)

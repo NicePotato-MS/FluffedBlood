@@ -1,10 +1,10 @@
 local utf8 = require("utf8")
 
-error_printer = function(msg, layer)
+local function error_printer(msg, layer)
 	print((debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end
 
-love.errorhandler = function(msg)
+function love.errorhandler(msg)
 	msg = tostring(msg)
 
 	error_printer(msg, 2)
@@ -40,7 +40,7 @@ love.errorhandler = function(msg)
 	love.graphics.reset()
 	local font = love.graphics.setNewFont(10)
 
-	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.setColor(1, 1, 1)
 
 	local trace = debug.traceback()
 
@@ -54,7 +54,7 @@ love.errorhandler = function(msg)
 
 	local err = {}
 
-	table.insert(err, "Oops! The game has crashed!\n")
+	table.insert(err, "Oops, the game has crashed!\n")
 	if love.system then
 		table.insert(err,"Press Ctrl+C or tap the screen to copy this error")
 	end
@@ -81,6 +81,7 @@ love.errorhandler = function(msg)
 	p = p:gsub("%[string \"(.-)\"%]", "%1")
 
 	local function draw()
+		if not love.graphics.isActive() then return end
 		local pos = 5
 		love.graphics.clear(40/255, 0/255, 0/255)
 		love.graphics.printf(p, pos, pos, love.graphics.getWidth() - pos)
@@ -92,7 +93,6 @@ love.errorhandler = function(msg)
 		if not love.system then return end
 		love.system.setClipboardText(fullErrorText)
 		p = p .. "\nCopied to clipboard!"
-		draw()
 	end
 
 	return function()

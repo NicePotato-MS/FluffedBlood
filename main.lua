@@ -7,9 +7,10 @@ local plrY = 0
 
 
 function love.load()
-    
-    local cursor = love.mouse.newCursor("Art/ui/Cursors/cursor.png", 0, 0)
-    love.mouse.setCursor(cursor)
+    if love.mouse.isCursorSupported() then
+        local cursor = love.mouse.newCursor("Art/ui/Cursors/cursor.png", 0, 0)
+        love.mouse.setCursor(cursor)
+    end
 
     Gamestate.registerEvents()
     Gamestate.switch(menu)
