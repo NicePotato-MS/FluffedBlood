@@ -1,4 +1,4 @@
-require("Scripts/vital")
+require("../Scripts/vital")
 
 local defaultScreenWidth = 480
 local defaultScreenHeight = 270

@@ -1,0 +1,4 @@
+print(comicSans)
+print(type(comicSans))
+print(type(Gamestate))
+print(type(Gamestate.switchTo))

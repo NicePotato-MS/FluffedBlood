@@ -34,6 +34,7 @@ function menu:init()
     playText = love.graphics.newText(comicSans, "Play")
     optionsButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
     optionsText = love.graphics.newText(comicSans, "Options")
+    print(type(comicSans))
 end
 
 function menu:draw()
@@ -68,13 +69,11 @@ function menu:draw()
     --Play Button
     if mouseInDrawable(drawAtCenter(playButton, screenXScale(0.5), screenYScale(0.5), 0.38*textureMultiple, 0.38*textureMultiple)) then
         if playButtonHover == false then
-            print("in")
             playButtonHover = true
             flux.to(playButtonTween, 0.5, {scaleMod = 1.2}):ease("elasticout")
         end
     else
         if playButtonHover == true then
-            print("out")
             playButtonHover = false
             flux.to(playButtonTween, 0.5, {scaleMod = 1}):ease("elasticout")
         end
@@ -85,13 +84,11 @@ function menu:draw()
     --Options Button
     if mouseInDrawable(drawAtCenter(optionsButton, screenXScale(0.5), screenYScale(0.64), 0.38*textureMultiple, 0.38*textureMultiple)) then
         if optionsButtonHover == false then
-            print("in")
             optionsButtonHover = true
             flux.to(optionsButtonTween, 0.5, {scaleMod = 1.2}):ease("elasticout")
         end
     else
         if optionsButtonHover == true then
-            print("out")
             optionsButtonHover = false
             flux.to(optionsButtonTween, 0.5, {scaleMod = 1}):ease("elasticout")
         end

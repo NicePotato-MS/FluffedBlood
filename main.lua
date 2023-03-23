@@ -1,7 +1,7 @@
 local console_toggle = require("console.console")
 require("Scripts/Scenes/menu")
 Gamestate = require("Scripts/hump/gamestate")
-flux = require("Scripts/flux")
+flux = require("Scripts/ui/flux")
 
 local plrX = 0
 local plrY = 0
