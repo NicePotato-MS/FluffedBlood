@@ -2,8 +2,9 @@
 
 require("Scripts/vital")
 require("Scripts/fonts")
-require("Scripts/ui")
+require("Scripts/ui/ui")
 Gamestate = require("Scripts/hump/gamestate")
+flux = require("Scripts/flux")
 
 
 menu = {}
@@ -17,8 +18,12 @@ local comicSans
 local menuTitle
 local playButton
 local playText
+local playButtonTween = {scaleMod = 1}
+local playButtonHover = false
 local optionsButton
 local optionsText
+local optionsButtonTween = {scaleMod = 1}
+local optionsButtonHover = false
 
 local textureMultiple
 
@@ -36,6 +41,8 @@ function menu:draw()
     textureMultiple = getTextureMultiple()
 
     comicSans = getFont("ComicSans", "Bold", 15*textureMultiple)
+    playText:setFont(comicSans)
+    optionsText:setFont(comicSans)
 
     --Background Color
     local bg = rgb(255,229,232)
@@ -49,7 +56,9 @@ function menu:draw()
     dotProgress = dotProgress + 1 * delta
     for iY=dotProgress*literalDotSize, literalDotSize*2+love.graphics.getHeight(), literalDotSize*4 do
         love.graphics.setColor(1, 1, 1)
-        drawDotRow(dotProgress*literalDotSize-literalDotSize*4,0-iY+love.graphics.getHeight()+literalDotSize, literalDotSize) 
+        for i=dotProgress*literalDotSize-literalDotSize*4, love.graphics.getWidth()+literalDotSize, literalDotSize*4 do
+            love.graphics.circle("fill", i, -iY+love.graphics.getHeight()+literalDotSize, literalDotSize)
+        end
     end
 
     love.graphics.setColor(255,255,255)
@@ -57,19 +66,39 @@ function menu:draw()
     love.graphics.draw(drawAtCenter(menuTitle, screenXScale(0.5), screenYScale(0.2), 0.1*textureMultiple, 0.1*textureMultiple))
 
     --Play Button
-    love.graphics.draw(drawAtCenter(playButton, screenXScale(0.5), screenYScale(0.5), 0.38*textureMultiple, 0.38*textureMultiple))
-    love.graphics.draw(drawAtCenter(playText, screenXScale(0.5), screenYScale(0.5), 1*textureMultiple, 1*textureMultiple))
+    if mouseInDrawable(drawAtCenter(playButton, screenXScale(0.5), screenYScale(0.5), 0.38*textureMultiple, 0.38*textureMultiple)) then
+        if playButtonHover == false then
+            print("in")
+            playButtonHover = true
+            flux.to(playButtonTween, 0.5, {scaleMod = 1.2}):ease("elasticout")
+        end
+    else
+        if playButtonHover == true then
+            print("out")
+            playButtonHover = false
+            flux.to(playButtonTween, 0.5, {scaleMod = 1}):ease("elasticout")
+        end
+    end
+    love.graphics.draw(drawAtCenter(playButton, screenXScale(0.5), screenYScale(0.5), 0.38*textureMultiple*playButtonTween.scaleMod, 0.38*textureMultiple*playButtonTween.scaleMod))
+    love.graphics.draw(drawAtCenter(playText, screenXScale(0.5), screenYScale(0.5),  playButtonTween.scaleMod, playButtonTween.scaleMod))
 
     --Options Button
-    love.graphics.draw(drawAtCenter(optionsButton, screenXScale(0.5), screenYScale(0.62), 0.38*textureMultiple, 0.38*textureMultiple))
-    love.graphics.draw(drawAtCenter(optionsText, screenXScale(0.5), screenYScale(0.62), 1*textureMultiple, 1*textureMultiple))
-    
-end
-
-function drawDotRow(x,y,size)
-    for i=x, love.graphics.getWidth()+literalDotSize, literalDotSize*4 do
-        love.graphics.circle("fill", i, y, size)
+    if mouseInDrawable(drawAtCenter(optionsButton, screenXScale(0.5), screenYScale(0.64), 0.38*textureMultiple, 0.38*textureMultiple)) then
+        if optionsButtonHover == false then
+            print("in")
+            optionsButtonHover = true
+            flux.to(optionsButtonTween, 0.5, {scaleMod = 1.2}):ease("elasticout")
+        end
+    else
+        if optionsButtonHover == true then
+            print("out")
+            optionsButtonHover = false
+            flux.to(optionsButtonTween, 0.5, {scaleMod = 1}):ease("elasticout")
+        end
     end
+    love.graphics.draw(drawAtCenter(optionsButton, screenXScale(0.5), screenYScale(0.64), 0.38*textureMultiple*optionsButtonTween.scaleMod, 0.38*textureMultiple*optionsButtonTween.scaleMod))
+    love.graphics.draw(drawAtCenter(optionsText, screenXScale(0.5), screenYScale(0.64), optionsButtonTween.scaleMod, optionsButtonTween.scaleMod))
+    
 end
 
 function menu:mousepressed()
