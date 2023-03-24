@@ -39,6 +39,7 @@ function love.errorhandler(msg)
 
 	love.graphics.reset()
 	local font = love.graphics.setNewFont(10)
+	local img = love.graphics.newImage("Art/ui/crash.png")
 
 	love.graphics.setColor(1, 1, 1)
 
@@ -84,6 +85,9 @@ function love.errorhandler(msg)
 		if not love.graphics.isActive() then return end
 		local pos = 5
 		love.graphics.clear(40/255, 0/255, 0/255)
+		love.graphics.setColor(1, 1, 1, 0.75)
+		love.graphics.draw(img, love.graphics.getWidth()-img:getWidth()*((love.graphics.getWidth()/480)*0.4), love.graphics.getHeight()-img:getHeight()*((love.graphics.getWidth()/480)*0.4), 0, (love.graphics.getWidth()/480)*0.4, (love.graphics.getWidth()/480)*0.4)
+		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.printf(p, pos, pos, love.graphics.getWidth() - pos)
 		love.graphics.present()
 	end
