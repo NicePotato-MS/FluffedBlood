@@ -5,16 +5,6 @@ local buttons = {}
 
 testButton = {
     colliders = {
-        imageExample = {
-            obj = love.graphics.newImage("Art/ui/Buttons/1x8.png"),
-            properties = {
-                x = 0,
-                y = 0,
-                rotation = 0,
-                scaleX = 1,
-                scaleY = 1
-            }
-        },
         rectangleExample = {
             obj = "rectangle",
             properties = {
@@ -64,6 +54,19 @@ testButton = {
     }
 }
 
-function createButton()
+-- Theoretically you can set a variable to a string and use 'var:createButton()' but this is not recommended 
+function createButton(self) -- self is a string that is the button identifier
+    if self == nil then return end
 
 end
+
+function destroyButton(self) -- self is a string that is the button identifier
+    if self == nil then return end
+    self == nil
+end
+
+function clearButtons()
+    buttons = {}
+end
+
+0
