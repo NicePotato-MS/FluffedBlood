@@ -1,72 +1,87 @@
 require("ui")
 require("flux")
 
-local buttons = {}
+local PB = {}
 
-testButton = {
+function PB.pbError(func, msg)
+    local fnc = func or ""
+    if fnc ~= "" then fnc = fnc.."(): " end
+    love.errorhandler("PotatoButton: "..fnc..msg)
+end
+
+function PB.createButton()
+    return {
+        colliders = {},
+        visuals = {}
+    }
+end
+
+function PB.createVisual()
+    
+end
+
+function PB.createCollider()
+
+end
+
+function PB.createAnim(propertyTable, time, easeStyle) -- the 'propertyTable' argument comes from PB.createProperties()
+    if type(propertyTable) ~= "table" then
+        PB.pbError("createAnim()","passed value propertyTable: '"..propertyTable.."' is not a table")
+        return false
+    end
+    local dur = time or 1
+    local sty = easeStyle or "quadout" -- default easing style
+    return {
+        properties = propertyTable,
+        duration = dur,
+        style = sty
+    }
+end
+
+function PB.createProperties(x,y,r,sx,sy) -- Beware! terrible code below
+    local pass = {}
+    if x ~= nil then pass["x"] = x end
+    if y ~= nil then pass["y"] = y end
+    if r ~= nil then pass["rotation"] = r end
+    if sx ~= nil then pass["scaleX"] = sx end
+    if sy ~= nil then pass["scaleY"] = sy end
+    return pass
+end
+
+function PB.clicked(self) -- use in a love.mouseclicked function in an if statement
+    if type(self) ~= "table" then
+        PB.pbError("clicked()","passed value self: '"..self.."' is not a table")
+        return false
+    end
+    if self["colliders"] == nil then
+        PB.pbError("clicked","passed value self '"..self.."' does not contain 'colliders'")
+        return false
+    end
+end
+
+--[[
+buttonStructure = {
     colliders = {
-        rectangleExample = {
+        {
             obj = "rectangle",
-            properties = {
-                x = 0,
-                y = 0,
-                rotation = 0,
-                scaleX = 100,
-                scaleY = 100
-            }
+            --[return of PB.createProperties]
         }
-    },
+    }
     visuals = {
-        imageExample = {
-            obj = love.graphics.newImage("Art/ui/Buttons/1x8.png"),
-            properties = {
-                x = 0,
-                y = 0,
-                rotation = 0,
-                scaleX = 1,
-                scaleY = 1
-            },
+        {
             anim = {
-                toStart = {
-                    properties = {
-                        x = 0,
-                        y = 0,
-                        rotation = 0,
-                        scaleX = 1
-                        scaleY = 1
-                    },
-                    duration = 0.5,
-                    style = "elasticout"
-                },
-                toFinish = {
-                    properties = {
-                        x = 0,
-                        y = 0,
-                        rotation = 0,
-                        scaleX = 1.2,
-                        scaleY = 1.2
-                    },
-                    duration = 0.5,
-                    style = "elasticout"
+                enterHover = {
+                    --[return of PB.createAnim()]
+                }
+                leaveHover = {
+                    --[return of PB.createAnim()]
+                }
+                onClick = {
+                    --[return of PB.createAnim()]
                 }
             }
         }
     }
 }
-
--- Theoretically you can set a variable to a string and use 'var:createButton()' but this is not recommended 
-function createButton(self) -- self is a string that is the button identifier
-    if self == nil then return end
-
-end
-
-function destroyButton(self) -- self is a string that is the button identifier
-    if self == nil then return end
-    self == nil
-end
-
-function clearButtons()
-    buttons = {}
-end
-
-0
+]]--
+return PB

@@ -1,4 +1,4 @@
-require("../Scripts/vital")
+require("../../Scripts/vital")
 
 local defaultScreenWidth = 480
 local defaultScreenHeight = 270
@@ -29,15 +29,15 @@ function pointInDrawable(pointX, pointY, drawable, x, y, rotation, scaleX, scale
     local rotatedY = centerY + sinR*relX + cosR*relY
     return (rotatedX >= x and rotatedX <= x + width and
             rotatedY >= y and rotatedY <= y + height)
-end  
+end
 
 function mouseInDrawable(drawable, x, y, rotation, scaleX, scaleY)
     return pointInDrawable(love.mouse.getX(), love.mouse.getY(), drawable, x, y, rotation, scaleX, scaleY)
-end  
+end
 
 function drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
-    sX = scaleX or 1
-    sY = scaleY or 1
+    local sX = scaleX or 1
+    local sY = scaleY or 1
     local pass = {
         drawable,
         round(drawable:getWidth()/2*(-sX))+x,

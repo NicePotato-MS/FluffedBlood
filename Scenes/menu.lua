@@ -4,7 +4,7 @@ require("Scripts/vital")
 require("Scripts/fonts")
 require("Scripts/ui/ui")
 Gamestate = require("Scripts/hump/gamestate")
-flux = require("Scripts/flux")
+flux = require("Scripts/ui/flux")
 
 
 menu = {}
