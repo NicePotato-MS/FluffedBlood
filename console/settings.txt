@@ -1,3 +1,4 @@
+scroll_output_on_exec true
 color_err #EA2A2AFF
 selected_color #ababab7f
 color_com #00CC00FF
@@ -11,4 +12,3 @@ expose_output_functions false
 color_info #429BF4FF
 color_warn #CECB2FFF
 background_color #292929df
-scroll_output_on_exec true
