@@ -1,4 +1,4 @@
-Fonts = {} -- The table that holds all fonts
+local Fonts = {} -- The table that holds all fonts
 --Font Name
 ---Size
 ----Style

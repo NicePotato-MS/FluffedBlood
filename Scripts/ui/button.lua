@@ -6,7 +6,7 @@ local PB = {}
 function PB.pbError(func, msg)
     local fnc = func or ""
     if fnc ~= "" then fnc = fnc.."(): " end
-    love.errorhandler("PotatoButton: "..fnc..msg)
+    assert("PotatoButton: "..fnc..msg)
 end
 
 function PB.createButton()
