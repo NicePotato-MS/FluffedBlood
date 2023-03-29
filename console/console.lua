@@ -1,4 +1,6 @@
 -- #region setup
+require("Scripts/vital")
+
 local console = {}
 
 setmetatable(console, {__index = _G})
@@ -465,7 +467,7 @@ end
 
 -- #region output
 function add_to_output(...)
-	local arg = {...}
+	local arg = seperate_by_newlines({...})
 	local narg = select("#", ...)
 
 	for i = 1, narg do

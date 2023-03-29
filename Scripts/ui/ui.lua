@@ -9,6 +9,23 @@ function getTextureMultiple()
     if result < 1 then return 1 else return result end
 end
 
+function pointInRectangle(px, py, rx, ry, rw, rh, rr)
+    -- Convert point to local space of rectangle
+    local cosR = math.cos(-rr)
+    local sinR = math.sin(-rr)
+    local dx = px - rx
+    local dy = py - ry
+    local pxL = cosR * dx + sinR * dy
+    local pyL = -sinR * dx + cosR * dy
+    
+    -- Check if point is inside local rectangle bounds
+    return pxL >= -rw/2 and pxL <= rw/2 and pyL >= -rh/2 and pyL <= rh/2
+end
+
+function mouseInRectangle(rx, ry, rw, rh, rr)
+    return pointInRectangle(love.mouse.getX(), love.mouse.getY(), rx, ry, rw, rh, rr)
+end
+
 function pointInDrawable(pointX, pointY, drawable, x, y, rotation, scaleX, scaleY)
     local sX = scaleX or 1
     local sY = scaleY or 1

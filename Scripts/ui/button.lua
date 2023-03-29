@@ -1,36 +1,58 @@
-require("ui")
-require("flux")
+require("Scripts/ui/ui")
+require("Scripts/ui/flux")
 
 local PB = {}
+
+PB.mt = {}
 
 function PB.pbError(func, msg)
     local fnc = func or ""
     if fnc ~= "" then fnc = fnc.."(): " end
-    assert("PotatoButton: "..fnc..msg)
+    love.errorhandler("PotatoButton: "..fnc..msg)
 end
 
 function PB.createButton()
-    return {
+    local pass = {
         colliders = {},
         visuals = {}
     }
+    setmetatable(pass, PB.mt)
+    return pass
 end
 
 function PB.createVisual()
     
 end
 
---[[
-Rectangle
--obj = "rect" or "rectangle"
--x
--y
--arg1 = width
--arg2 = height
--arg3 = rotation
-]]--
+
+function PB.mt.addCollider(self, collider)
+    if type(self) ~= "table" then
+        PB.pbError("addCollider","passed value self: '"..self.."' is not a table")
+        return false
+    end
+    if type(collider) ~= "table" then
+        PB.pbError("addCollider","passed value collider: '"..collider.."' is not a table")
+        return false
+    end
+    if self["colliders"] == nil then
+        PB.pbError("addCollider","passed value self '"..self.."' does not contain 'colliders'")
+        return false
+    end
+
+    self.colliders[#self.colliders+1] = collider
+end
 
 function PB.createCollider(obj, x, y, arg1, arg2, arg3)
+    --[[
+    Rectangle
+    -obj = "rect" or "rectangle"
+    -x
+    -y
+    -arg1 = width
+    -arg2 = height
+    -arg3 = rotation
+    ]]--
+
     if obj == "rect" or obj == "rectangle" then
         local px = x or 0
         local py = y or 0
@@ -77,7 +99,7 @@ function PB.createProperties(x,y,r,sx,sy) -- Beware! terrible code below
     return pass
 end
 
-function PB.clicked(self) -- use in a love.mouseclicked function in an if statement
+function PB.mt.clicked(self) -- use in a love.mouseclicked function in an if statement
     if type(self) ~= "table" then
         PB.pbError("clicked","passed value self: '"..self.."' is not a table")
         return false
@@ -86,6 +108,17 @@ function PB.clicked(self) -- use in a love.mouseclicked function in an if statem
         PB.pbError("clicked","passed value self '"..self.."' does not contain 'colliders'")
         return false
     end
+
+    for k, v in pairs(self.colliders) do
+        local p = v.properties
+        if v.obj == "rect" then
+            if mouseInRectangle(p.x, p.y, p.scaleX, p.scaleY, p.rotation) then return true end
+        else
+            PB.pbError("clicked","collider is not a recognized type")
+            return false
+        end
+    end
+    return false
 end
 
 --[[

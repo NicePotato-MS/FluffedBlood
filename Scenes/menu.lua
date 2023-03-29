@@ -5,11 +5,12 @@ require("Scripts/fonts")
 require("Scripts/ui/ui")
 Gamestate = require("Scripts/hump/gamestate")
 flux = require("Scripts/ui/flux")
-
+PB = require("Scripts/ui/button")
 
 menu = {}
 
 local delta
+local textureMultiple
 
 local dotSize = 5
 local dotProgress = 0
@@ -25,7 +26,7 @@ local optionsText
 local optionsButtonTween = {scaleMod = 1}
 local optionsButtonHover = false
 
-local textureMultiple
+local debugButton
 
 function menu:init()
     comicSans = getFont("ComicSans", "Bold", 15)
@@ -34,7 +35,10 @@ function menu:init()
     playText = love.graphics.newText(comicSans, "Play")
     optionsButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
     optionsText = love.graphics.newText(comicSans, "Options")
-    print(type(comicSans))
+    debugButton = PB.createButton()
+    printTable(flux)
+    --debugButton:addCollider(PB.createCollider("rect", 100, 100, 100, 100))
+
 end
 
 function menu:draw()

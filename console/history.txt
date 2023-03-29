@@ -2,3 +2,15 @@ print(comicSans)
 print(type(comicSans))
 print(type(Gamestate))
 print(type(Gamestate.switchTo))
+assert("no")
+love.errorhandler("no u")
+uh oh
+it broke lol
+j
+print("the\nfitnessgram\npacer\ntest")
+wow
+print("hey\nthis\nmight\nbe\nbad")
+print(output_table)
+printTable(output_table)
+uh
+thats not right is it
