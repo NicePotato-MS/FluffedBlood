@@ -5,6 +5,10 @@ local PB = {}
 
 PB.mt = {}
 
+PB.mt.__index = function (table, key)
+    return PB[key]
+end
+
 function PB.pbError(func, msg)
     local fnc = func or ""
     if fnc ~= "" then fnc = fnc.."(): " end
@@ -25,7 +29,7 @@ function PB.createVisual()
 end
 
 
-function PB.mt.addCollider(self, collider)
+function PB:addCollider(collider)
     if type(self) ~= "table" then
         PB.pbError("addCollider","passed value self: '"..self.."' is not a table")
         return false
@@ -99,7 +103,7 @@ function PB.createProperties(x,y,r,sx,sy) -- Beware! terrible code below
     return pass
 end
 
-function PB.mt.clicked(self) -- use in a love.mouseclicked function in an if statement
+function PB:clicked() -- use in a love.mouseclicked function in an if statement
     if type(self) ~= "table" then
         PB.pbError("clicked","passed value self: '"..self.."' is not a table")
         return false

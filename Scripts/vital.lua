@@ -24,10 +24,20 @@ function printTable(tbl, depth)
     local indent = string.rep("  ", depth - 1) -- indentation for current depth
 
     for k, v in pairs(tbl) do
+        if depth >= 16 then
+            print(indent.."...(overflow)")
+            return
+        end
         if type(v) == "table" and depth > 0 then
-            print(indent .. k .. " = {")
-            printTable(v, depth + 1)
-            print(indent .. "}")
+            if next(v) == nil then
+                print(indent..k.." = {}")
+            else
+                print(indent .. k .. " = {")
+                printTable(v, depth + 1)
+                print(indent .. "}")
+            end
+        elseif type(v) == "string" then
+            print(indent .. k .. ' = "'..v..'"')
         else
             print(indent .. k .. " = " .. tostring(v))
         end

@@ -1,4 +1,3 @@
-print(comicSans)
 print(type(comicSans))
 print(type(Gamestate))
 print(type(Gamestate.switchTo))
@@ -14,3 +13,18 @@ print(output_table)
 printTable(output_table)
 uh
 thats not right is it
+cprint
+cprint()
+info()
+print("|cff0000ffhai|r)
+print("|cff0000ffhai|r")
+print("|cff0f00ffhai|r")
+print("|cfff000ffhai|r")
+print("|cfff0afffhai|r")
+a = {{
+a = {}
+a["disaster"] = a
+printTable(a)
+a={}
+a[1]=a
+printTable(a)

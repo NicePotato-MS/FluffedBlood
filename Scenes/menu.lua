@@ -36,9 +36,8 @@ function menu:init()
     optionsButton = love.graphics.newImage("Art/ui/Buttons/1x8.png")
     optionsText = love.graphics.newText(comicSans, "Options")
     debugButton = PB.createButton()
-    printTable(flux)
-    --debugButton:addCollider(PB.createCollider("rect", 100, 100, 100, 100))
-
+    debugButton:addCollider(PB.createCollider("rect", 100, 100, 100, 100))
+    printTable(debugButton)
 end
 
 function menu:draw()

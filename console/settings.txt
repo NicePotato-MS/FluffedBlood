@@ -1,4 +1,3 @@
-toggle_key `
 color_info #429BF4FF
 background_color #292929df
 scroll_output_on_exec true
@@ -12,3 +11,4 @@ color_warn #CECB2FFF
 cursor_style block
 cursor_blink_duration 0.5
 output_jump_by 7
+toggle_key `
