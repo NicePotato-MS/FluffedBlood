@@ -1,15 +1,17 @@
-require("../../Scripts/vital")
+local lovePlus = require("Scripts/love-plus")
+
+local ui = {}
 
 local defaultScreenWidth = 480
 local defaultScreenHeight = 270
 
-function getTextureMultiple()
+function ui.getTextureMultiple()
     local width, height = love.graphics.getDimensions()
-    local result = math.min(math.floor(width/(defaultScreenWidth-32)),math.floor(height/(defaultScreenHeight-32)))
+    local result = math.min(math.floor(width/(defaultScreenWidth-16)),math.floor(height/(defaultScreenHeight-16)))
     if result < 1 then return 1 else return result end
 end
 
-function pointInRectangle(px, py, rx, ry, rw, rh, rr)
+function ui.pointInRectangle(px, py, rx, ry, rw, rh, rr)
     -- Convert point to local space of rectangle
     local cosR = math.cos(-rr)
     local sinR = math.sin(-rr)
@@ -22,11 +24,11 @@ function pointInRectangle(px, py, rx, ry, rw, rh, rr)
     return pxL >= -rw/2 and pxL <= rw/2 and pyL >= -rh/2 and pyL <= rh/2
 end
 
-function mouseInRectangle(rx, ry, rw, rh, rr)
-    return pointInRectangle(love.mouse.getX(), love.mouse.getY(), rx, ry, rw, rh, rr)
+function ui.mouseInRectangle(rx, ry, rw, rh, rr)
+    return ui.pointInRectangle(love.mouse.getX(), love.mouse.getY(), rx, ry, rw, rh, rr)
 end
 
-function pointInDrawable(pointX, pointY, drawable, x, y, rotation, scaleX, scaleY)
+function ui.pointInDrawable(pointX, pointY, drawable, x, y, rotation, scaleX, scaleY)
     local sX = scaleX or 1
     local sY = scaleY or 1
     local width = drawable:getWidth() * sX
@@ -48,17 +50,17 @@ function pointInDrawable(pointX, pointY, drawable, x, y, rotation, scaleX, scale
             rotatedY >= y and rotatedY <= y + height)
 end
 
-function mouseInDrawable(drawable, x, y, rotation, scaleX, scaleY)
-    return pointInDrawable(love.mouse.getX(), love.mouse.getY(), drawable, x, y, rotation, scaleX, scaleY)
+function ui.mouseInDrawable(drawable, x, y, rotation, scaleX, scaleY)
+    return ui.pointInDrawable(love.mouse.getX(), love.mouse.getY(), drawable, x, y, rotation, scaleX, scaleY)
 end
 
-function drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
+function ui.drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
     local sX = scaleX or 1
     local sY = scaleY or 1
     local pass = {
         drawable,
-        round(drawable:getWidth()/2*(-sX))+x,
-        round(drawable:getHeight()/2*(-sY))+y,
+        lovePlus.round(drawable:getWidth()/2*(-sX))+x,
+        lovePlus.round(drawable:getHeight()/2*(-sY))+y,
         rotation,
         sX,
         sY,
@@ -66,12 +68,47 @@ function drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
     return unpack(pass)
 end
 
-function screenXScale(x)
-    local real = defaultScreenWidth*getTextureMultiple()
-    return round((love.graphics.getWidth()-real)/2+real*x)
+function ui.screenXScale(x)
+    local real = defaultScreenWidth*ui.getTextureMultiple()
+    return lovePlus.round((love.graphics.getWidth()-real)/2+real*x)
 end
 
-function screenYScale(y)
-    local real = defaultScreenHeight*getTextureMultiple()
-    return round((love.graphics.getHeight()-real)/2+real*y)
+function ui.screenYScale(y)
+    local real = defaultScreenHeight*ui.getTextureMultiple()
+    return lovePlus.round((love.graphics.getHeight()-real)/2+real*y)
 end
+
+function ui.drawTextWithStroke(text, x, y, r, g, b, strokeSize, width, height)
+    local dx = {-1, 0, 1, 0}
+    local dy = {0, -1, 0, 1}
+
+    -- Draw the text with the stroke color
+    love.graphics.setColor(r, g, b)
+    love.graphics.draw(text, x, y, 0, width, height)
+
+    -- Draw the text with the stroke effect
+    love.graphics.setColor(0, 0, 0)
+    for i = 1, strokeSize do
+        for j = 1, 4 do
+            love.graphics.draw(text, x + i * dx[j], y + i * dy[j], 0, width, height)
+        end
+    end
+end
+
+
+local Fonts = {} -- The table that holds all fonts
+--Font Name
+---Size
+----Style
+
+function ui.getFont(name, style, size) -- very ugly
+    if Fonts[name] == nil then Fonts[name] = {} end -- Create the font table if it doesn't exist
+    if Fonts[name][size] == nil then Fonts[name][size] = {} end -- Create the size table if it doesn't exist
+    if Fonts[name][size][style] ~= nil then return Fonts[name][size][style] end -- Check if font exists already
+    local file = "Fonts/"..name.."/"..style..".ttf"
+    if love.filesystem.getInfo(file) == nil then return nil end -- Check if the font exists
+    Fonts[name][size][style] = love.graphics.newFont(file, size)
+    return Fonts[name][size][style]
+end
+
+return ui

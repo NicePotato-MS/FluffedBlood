@@ -1,5 +1,3 @@
-print(type(comicSans))
-print(type(Gamestate))
 print(type(Gamestate.switchTo))
 assert("no")
 love.errorhandler("no u")
@@ -28,3 +26,5 @@ printTable(a)
 a={}
 a[1]=a
 printTable(a)
+error("hi")
+qqq

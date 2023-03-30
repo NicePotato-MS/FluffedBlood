@@ -1,6 +1,4 @@
 -- #region setup
-require("Scripts/vital")
-
 local console = {}
 
 setmetatable(console, {__index = _G})

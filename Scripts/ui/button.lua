@@ -5,7 +5,7 @@ local PB = {}
 
 PB.mt = {}
 
-PB.mt.__index = function (table, key)
+PB.mt.__index = function(t, key)
     return PB[key]
 end
 
