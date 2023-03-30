@@ -1,6 +1,7 @@
 
 
 function love.conf(t)
+    require("game-config")
     require("Scripts/errorhandler")
     t.identity = "NicePotato/Manglwe"                                -- The name of the save directory (string)
     t.appendidentity = false                        -- Search files in source directory before save directory (boolean)

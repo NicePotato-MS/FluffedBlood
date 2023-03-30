@@ -11,11 +11,6 @@ function lovePlus.getDrawableType(drawable)
         return "Unknown"
     end
 
-    if type(drawable) ~= "table" then
-        love.errorhandler("getDrawableType(): argument is not a table")
-        return "Unknown"
-    end
-
     if not drawable.typeOf then
         love.errorhandler("getDrawableType(): argument has no typeOf() method")
         return "Unknown"

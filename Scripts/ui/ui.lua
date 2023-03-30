@@ -78,22 +78,37 @@ function ui.screenYScale(y)
     return lovePlus.round((love.graphics.getHeight()-real)/2+real*y)
 end
 
-function ui.drawTextWithStroke(text, x, y, r, g, b, strokeSize, width, height)
+function ui.drawTextWithStroke(text, x, y, strokeSize, strokeColor, width, height)
     local dx = {-1, 0, 1, 0}
     local dy = {0, -1, 0, 1}
+    local step = 1 / strokeSize
 
-    -- Draw the text with the stroke color
-    love.graphics.setColor(r, g, b)
-    love.graphics.draw(text, x, y, 0, width, height)
+    if lovePlus.getDrawableType(text) ~= "Text" then
+        love.errorhandler("drawTextWithStroke: input isn't a text object")
+        return nil 
+    end
+
+    x = x or 0
+    y = y or 0
+    strokeSize = strokeSize or 1
+    strokeColor = strokeColor or {1, 1, 1}
+    width = width or 1
+    height = height or 1
 
     -- Draw the text with the stroke effect
-    love.graphics.setColor(0, 0, 0)
+    local oldColor = {love.graphics.getColor()}
     for i = 1, strokeSize do
+        love.graphics.setColor(strokeColor)
         for j = 1, 4 do
-            love.graphics.draw(text, x + i * dx[j], y + i * dy[j], 0, width, height)
+            love.graphics.draw(text, x + i * dx[j] * step, y + i * dy[j] * step, 0, width, height)
         end
     end
+
+    love.graphics.setColor(oldColor)
+    love.graphics.draw(text, x, y, 0, width, height)
 end
+
+
 
 
 local Fonts = {} -- The table that holds all fonts

@@ -12,10 +12,13 @@ local menu = {}
 local delta
 local textureMultiple
 
+local versionText
+
 local dotSize = 5
 local dotProgress = 0
 local literalDotSize = 5
-local comicSans
+local comicSans15
+local comicSans8
 local menuTitle
 local playButton
 local playText
@@ -29,13 +32,14 @@ local optionsButtonHover = false
 local debugButton
 
 function menu:init()
-    comicSans = ui.getFont("ComicSans", "Bold", 15)
-    versionText = love.graphics.newText(comicSans, ver)
+    comicSans15 = ui.getFont("ComicSans", "Bold", 15)
+    comicSans8 = ui.getFont("ComicSans", "Bold", 8)
+    versionText = love.graphics.newText(comicSans8, VERSION_TEXT)
     menuTitle = lovePlus.loadImage("Art/ui/title.png")
     playButton = lovePlus.loadImage("Art/ui/Buttons/1x8.png")
-    playText = love.graphics.newText(comicSans, "Play")
+    playText = love.graphics.newText(comicSans15, "Play")
     optionsButton = lovePlus.loadImage("Art/ui/Buttons/1x8.png")
-    optionsText = love.graphics.newText(comicSans, "Options")
+    optionsText = love.graphics.newText(comicSans15, "Options")
     debugButton = PB.createButton()
     debugButton:addCollider(PB.createCollider("rect", 100, 100, 100, 100))
     lovePlus.printTable(debugButton)
@@ -45,9 +49,11 @@ function menu:draw()
     delta = love.timer.getDelta()
     textureMultiple = ui.getTextureMultiple()
 
-    comicSans = ui.getFont("ComicSans", "Bold", 15*textureMultiple)
-    playText:setFont(comicSans)
-    optionsText:setFont(comicSans)
+    comicSans15 = ui.getFont("ComicSans", "Bold", 15*textureMultiple)
+    comicSans8 = ui.getFont("ComicSans", "Bold", 8*textureMultiple)
+    playText:setFont(comicSans15)
+    optionsText:setFont(comicSans15)
+    versionText:setFont(comicSans8)
 
     --Background Color
     local bg = lovePlus.rgb(255,229,232)
@@ -100,6 +106,8 @@ function menu:draw()
     love.graphics.draw(ui.drawAtCenter(optionsButton, ui.screenXScale(0.5), ui.screenYScale(0.64), 0.38*textureMultiple*optionsButtonTween.scaleMod, 0.38*textureMultiple*optionsButtonTween.scaleMod))
     love.graphics.draw(ui.drawAtCenter(optionsText, ui.screenXScale(0.5), ui.screenYScale(0.64), optionsButtonTween.scaleMod, optionsButtonTween.scaleMod))
     
+    ui.drawTextWithStroke(versionText, 2*textureMultiple, ui.screenYScale(1)-4*textureMultiple-versionText:getHeight(), 2*textureMultiple, {0,0,0}, 1, 1)
+
 end
 
 function menu:mousepressed()
