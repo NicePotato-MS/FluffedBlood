@@ -1,18 +1,28 @@
 local lovePlus = {}
 lovePlus.mt = {}
 
+local giveErr
+
 lovePlus.mt.__index = function(t, key)
     return lovePlus[key]
 end
 
-function lovePlus.getDrawableType(drawable)
+local function errorWithCheck(msg)
+    if giveErr == true then
+        love.errorhandler(msg)
+    end
+end
+
+function lovePlus.getDrawableType(drawable, giveError)
+    giveErr = giveError or true
     if not drawable then
-        love.errorhandler("getDrawableType(): argument is nil")
+        errorWithCheck("getDrawableType(): argument is nil")
         return "Unknown"
     end
 
     if not drawable.typeOf then
-        love.errorhandler("getDrawableType(): argument has no typeOf() method")
+
+        errorWithCheck("getDrawableType(): argument has no typeOf() method")
         return "Unknown"
     end
 
@@ -45,12 +55,13 @@ function lovePlus.getDrawableType(drawable)
     elseif drawable:typeOf("Points") then
         return "Points"
     else
-        love.errorhandler("getDrawableType(): unsupported drawable type")
+        errorWithCheck("getDrawableType(): unsupported drawable type")
         return "Unknown"
     end
 end
 
-function lovePlus.loadImage(filename)
+function lovePlus.loadImage(filename, giveError)
+    giveErr = giveError or true
     if love.filesystem.getInfo(filename) then
         return love.graphics.newImage(filename)
     else
@@ -89,12 +100,13 @@ function lovePlus.pointWithin(x, y, x1, y1, x2, y2)
     end
 end
 
-function lovePlus.printTable(tbl, depth)
-    depth = depth or 1 -- default depth is 1
+function lovePlus.printTable(tbl, max)
+    max = max or 16 -- maximum the function will go before overflowing
+    local depth = 1 -- default depth is 1
     local indent = string.rep("  ", depth - 1) -- indentation for current depth
 
     for k, v in pairs(tbl) do
-        if depth >= 16 then
+        if depth >= max then
             print(indent.."...(overflow)")
             return
         end

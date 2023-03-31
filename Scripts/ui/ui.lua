@@ -2,15 +2,6 @@ local lovePlus = require("Scripts/love-plus")
 
 local ui = {}
 
-local defaultScreenWidth = 480
-local defaultScreenHeight = 270
-
-function ui.getTextureMultiple()
-    local width, height = love.graphics.getDimensions()
-    local result = math.min(math.floor(width/(defaultScreenWidth-16)),math.floor(height/(defaultScreenHeight-16)))
-    if result < 1 then return 1 else return result end
-end
-
 function ui.pointInRectangle(px, py, rx, ry, rw, rh, rr)
     -- Convert point to local space of rectangle
     local cosR = math.cos(-rr)
@@ -54,30 +45,6 @@ function ui.mouseInDrawable(drawable, x, y, rotation, scaleX, scaleY)
     return ui.pointInDrawable(love.mouse.getX(), love.mouse.getY(), drawable, x, y, rotation, scaleX, scaleY)
 end
 
-function ui.drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
-    local sX = scaleX or 1
-    local sY = scaleY or 1
-    local pass = {
-        drawable,
-        lovePlus.round(drawable:getWidth()/2*(-sX))+x,
-        lovePlus.round(drawable:getHeight()/2*(-sY))+y,
-        rotation,
-        sX,
-        sY,
-    }
-    return unpack(pass)
-end
-
-function ui.screenXScale(x)
-    local real = defaultScreenWidth*ui.getTextureMultiple()
-    return lovePlus.round((love.graphics.getWidth()-real)/2+real*x)
-end
-
-function ui.screenYScale(y)
-    local real = defaultScreenHeight*ui.getTextureMultiple()
-    return lovePlus.round((love.graphics.getHeight()-real)/2+real*y)
-end
-
 function ui.drawTextWithStroke(text, x, y, strokeSize, strokeColor, width, height)
     local dx = {-1, 0, 1, 0}
     local dy = {0, -1, 0, 1}
@@ -107,8 +74,6 @@ function ui.drawTextWithStroke(text, x, y, strokeSize, strokeColor, width, heigh
     love.graphics.setColor(oldColor)
     love.graphics.draw(text, x, y, 0, width, height)
 end
-
-
 
 
 local Fonts = {} -- The table that holds all fonts
