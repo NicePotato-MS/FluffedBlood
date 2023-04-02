@@ -1,3 +1,32 @@
+--[[
+TODO
+----------------
+love.graphics.arc
+love.graphics.circle
+love.graphics.clear
+love.graphics.discard
+love.graphics.draw
+love.graphics.drawInstanced
+love.graphics.drawLayer
+love.graphics.drawq
+love.graphics.ellipse
+love.graphics.flushBatch
+love.graphics.line
+love.graphics.point
+love.graphics.points	
+love.graphics.polygon	
+love.graphics.present	
+love.graphics.print
+love.graphics.printf	
+love.graphics.quad
+love.graphics.rectangle	
+love.graphics.stencil	
+love.graphics.triangle	
+
+
+]]--
+
+
 local ui = require("Scripts/ui/ui")
 local lovePlus = require("Scripts/lovePlus")
 
@@ -83,6 +112,12 @@ function screen.drawAtCenter(drawable, x, y, scaleX, scaleY, rotation)
         sY,
     }
     return unpack(pass)
+end
+
+function screen.draw(drawable,...)
+    -- First step: Decode input arguments
+    args = {...}
+
 end
 
 return screen

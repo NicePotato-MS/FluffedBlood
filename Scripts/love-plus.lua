@@ -1,9 +1,11 @@
 local lovePlus = {}
 lovePlus.mt = {}
 
+lovePlus.version = 1
+
 local giveErr
 
-lovePlus.mt.__index = function(t, key)
+lovePlus.mt.__index = function(_, key)
     return lovePlus[key]
 end
 
@@ -126,20 +128,22 @@ function lovePlus.printTable(tbl, max)
     end
 end
 
-function lovePlus.seperateByNewlines(strings)
-    local result = {}
-    for key, value in pairs(strings) do
-      if type(value) == "table" then
-        result[key] = seperateByNewlines(value)
-      else
-        local subresult = {}
-        for line in string.gmatch(value, "[^\n]+") do
-            table.insert(subresult, line)
+function lovePlus.duplicateValue(value)
+    local valueType = type(value)
+    local copyValue
+
+    if valueType == "table" then
+        copyValue = {}
+        for key, val in pairs(value) do
+            copyValue[lovePlus.duplicateValue(key)] = lovePlus.duplicateValue(val)
         end
-        result[key] = subresult
-      end
+    elseif valueType == "function" then
+        -- Functions cannot be copied in Lua, so we return nil for them
+        copyValue = nil
+    else
+        copyValue = value
     end
-    return result
+    return copyValue
 end
 
 return lovePlus
